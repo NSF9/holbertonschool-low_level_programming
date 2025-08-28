@@ -1,8 +1,13 @@
 #include <stdlib.h>
 #include <time.h>
-/* more headers goes there */
+#include <stdio.h>
 
-/* betty style doc for function main goes there */
+/**
+ * main - assigns a random number to n and prints whether
+ *        it is positive, negative, or zero
+ *
+ * Return: Always 0 (Success)
+ */
 int main(void)
 {
 	int n;
@@ -23,6 +28,5 @@ int main(void)
 		printf("%d is negative\n", n);
 	}
 
-	
 	return (0);
 }

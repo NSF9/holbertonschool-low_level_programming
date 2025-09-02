@@ -1,8 +1,8 @@
 #include "main.h"
 /**
- * print_most_numbers - prints odd numbers only 
+ * print_most_numbers - prints odd numbers only
  *
- * Return: 0 1 3 5 7 ...
+ * Return: 0 1 3 5 7
  */
 void print_most_numbers(void)
 {
@@ -18,8 +18,7 @@ void print_most_numbers(void)
 
 
 	}
-	
-	_putchar('\n');
 
+_putchar('\n');
 
 }

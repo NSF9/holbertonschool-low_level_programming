@@ -1,15 +1,15 @@
 #include "main.h"
 /**
-*print Digonal - draws / line by line 
+*print Digonal - draws / line by line
 *
 * Return: void
 */ 
-void print_diagonal(int n)
+void print_diagonal (int n)
 {
 
 	int i, j;
 
-	if(n <= 0)
+	if (n <= 0)
 	{
 
 	_putchar('\n');
@@ -26,5 +26,3 @@ void print_diagonal(int n)
 
 
 }
- 
-

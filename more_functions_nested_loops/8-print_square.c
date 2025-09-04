@@ -2,35 +2,24 @@
 
 /**
  * print_square - draws a square line on the terminal
- * @n: number of times the character '#' should be printed
+ * @size: size of the square
  *
  * Return: void
  */
-	void print_square(int size)
+void print_square(int size)
+{
+	int i, j;
+
+	if (size <= 0)
 	{
-
-	int i;
-
-	if(size <= 0)
-	{
-
-	_putchar('\n');
-
-	return;
-
+		_putchar('\n');
+		return;
 	}
 
-	for(i =0; i <= size; i++)
+	for (i = 0; i < size; i++)
 	{
-
-
-_putchar('#');
-
-
-
-
-	}	
-
-_putchar('\n');
-
+		for (j = 0; j < size; j++)
+			_putchar('#');
+		_putchar('\n');
 	}
+}

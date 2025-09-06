@@ -1,30 +1,27 @@
 #include "main.h"
 
 /**
- * join_strings_limited - Appends n characters from src to the end of dest
- * @dest: Destination string to append to
- * @src: Source string to append from
- * @n: Maximum number of characters to append
+ * _strncat - concatenates n bytes from src to dest
+ * @dest: destination string
+ * @src: source string
+ * @n: number of bytes to concatenate
  *
- * Return: Pointer to the resulting string (dest)
+ * Return: pointer to dest
  */
 char *_strncat(char *dest, char *src, int n)
 {
-	int d_len = 0, s_index = 0;
+	int i, j;
 
+	for (i = 0; dest[i] != '\0'; i++)
+		;
 
-	while (dest[d_len])
-		d_len++;
-
-	
-	while (s_index < n && src[s_index])
+	for (j = 0; j < n && src[j] != '\0'; j++)
 	{
-		dest[d_len] = src[s_index];
-		d_len++;
-		s_index++;
+		dest[i] = src[j];
+		i++;
 	}
 
-	dest[d_len] = '\0';
+	dest[i] = '\0';
 
 	return (dest);
 }

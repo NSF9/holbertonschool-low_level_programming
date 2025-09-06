@@ -8,7 +8,7 @@
  *
  * Return: dest with src appended
  */
-char *join_strings_limited(char *dest, char *src, int n)
+char *_strncat(char *dest, char *src, int n)
 {
 	int d_len = 0, s_index = 0;
 

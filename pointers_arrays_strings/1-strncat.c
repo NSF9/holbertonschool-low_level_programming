@@ -12,11 +12,11 @@ char *_strncat(char *dest, char *src, int n)
 {
 	int d_len = 0, s_index = 0;
 
-	/* Find the current length of dest */
+
 	while (dest[d_len])
 		d_len++;
 
-	/* Copy characters from src to dest */
+	
 	while (s_index < n && src[s_index])
 	{
 		dest[d_len] = src[s_index];
@@ -24,7 +24,7 @@ char *_strncat(char *dest, char *src, int n)
 		s_index++;
 	}
 
-	dest[d_len] = '\0'; /* null-terminate */
+	dest[d_len] = '\0';
 
 	return (dest);
 }

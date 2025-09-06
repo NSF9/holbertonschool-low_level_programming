@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * join_strings_limited - appends up to n characters from src to dest
- * @dest: the base string to append to
- * @src: the string to append from
- * @n: max number of characters to copy
+ * join_strings_limited - Appends n characters from src to the end of dest
+ * @dest: Destination string to append to
+ * @src: Source string to append from
+ * @n: Maximum number of characters to append
  *
- * Return: dest with src appended
+ * Return: Pointer to the resulting string (dest)
  */
 char *_strncat(char *dest, char *src, int n)
 {

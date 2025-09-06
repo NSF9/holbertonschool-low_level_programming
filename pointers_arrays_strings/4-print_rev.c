@@ -6,7 +6,7 @@
  *
  * Return: void
  */
-void print_rev(char *s)
+void reverse_array(char *s)
 {
 int len = 0;
 int i;

@@ -1,23 +1,19 @@
 #include "main.h"
 
 /**
- * memset - fills memory many of bytes
- * @Array: pointes to index
- * @b: write a byte here 
- * @n: number of bytes
+ * _memset - fills memory with a constant byte
+ * @s: pointer to memory area
+ * @b: constant byte to fill
+ * @n: number of bytes to fill
  *
- * Return: array 
+ * Return: pointer to memory area s
  */
-char* _memset(char* Array, char Bytes, unsigned int num)
+char *_memset(char *s, char b, unsigned int n)
 {
-    unsigned int i;
+	unsigned int i;
 
-    for (i = 0; i < num; i++)
-    {
-        Array[i] = Bytes;
+	for (i = 0; i < n; i++)
+		s[i] = b;
 
-    }
-
-    return (Array);
-
+	return (s);
 }

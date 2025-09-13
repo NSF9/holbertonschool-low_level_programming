@@ -3,7 +3,7 @@
 
 /**
  * _strpbrk - searches a string for any of a set of bytes
- * @s: input string to search within
+ * @str: input string to search within
  * @accept: string containing the set of characters to look for
  *
  * Return: pointer to the first occurrence in s of any character from accept,

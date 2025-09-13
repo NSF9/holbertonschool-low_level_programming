@@ -2,15 +2,15 @@
 
 /**
  * _print_rev_recursion - prints a string in reverse
- * @str: pointer to the string
+ * @s: pointer to the string
  *
  * Return: Nothing
  */
-void PrintRevRecursion(char *str)
+void _print_rev_recursion(char *str)
 {
 	if (*str == '\0')
 		return;
 
-	PrintRevRecursion(str + 1);
+	_print_rev_recursion(str + 1);
 	_putchar(*str);
 }

@@ -7,6 +7,6 @@
  */
 int main(void)
 {
-    PrintRevRecursion("\nColton Walker");
+    _print_rev_recursion("\nColton Walker");
     return (0);
 }

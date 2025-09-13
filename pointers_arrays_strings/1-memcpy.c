@@ -8,15 +8,18 @@
  *
  * Return: pointer to dest
  */
-char * _memcpy (char* dest, char* surc, unsigned int num)
+char *_memcpy (char *dest, char *surc, unsigned int num)
+
 {
 
-	
-    unsigned int i;
 
-	for (i = 0; i < num;i++)
+unsigned int i;
+
+	for (i = 0; i < num; i++)
 	{
-        dest[i] = surc[i];
+
+	dest[i] = surc[i];
+
 	}
 
     return (dest);

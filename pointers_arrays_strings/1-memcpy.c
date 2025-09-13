@@ -8,7 +8,7 @@
  *
  * Return: pointer to dest
  */
-char *_memcpy (char *dest, char *surc, unsigned int num)
+char *_memcpy(char *dest, char *surc, unsigned int num)
 
 {
 
@@ -19,8 +19,6 @@ unsigned int i;
 	{
 
 	dest[i] = surc[i];
-
 	}
-
-    return (dest);
+	return (dest);
 }

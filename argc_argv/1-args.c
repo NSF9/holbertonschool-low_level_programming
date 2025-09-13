@@ -9,7 +9,7 @@
  */
 int main(int argc, char *argv[])
 {
-(void)argc; /* unused variable */
-printf("%s\n", argv[0]);
+(void)argv; /* unused variable */
+printf("%d\n", argc - 1);
 return (0);
 }

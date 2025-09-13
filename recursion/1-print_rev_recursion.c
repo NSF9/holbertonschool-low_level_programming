@@ -9,10 +9,8 @@
 void PrintRevRecursion(char *str)
 {
 	if (*str == '\0')
-	{
-		_putchar('\n');
 		return;
-	}
+
 	PrintRevRecursion(str + 1);
 	_putchar(*str);
 }

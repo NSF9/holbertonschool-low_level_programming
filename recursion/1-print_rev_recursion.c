@@ -6,7 +6,7 @@
  *
  * Return: Nothing
  */
-void PrintRevRecursion(char *str)
+void _print_rev_recursion(char *str)
 {
 	if (*str == '\0')
 	{

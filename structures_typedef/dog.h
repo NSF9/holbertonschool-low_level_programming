@@ -18,11 +18,11 @@ struct dog
 	char *owner;
 };
 
-typedef struct dog dog_st;
+typedef struct dog dog_t;
 
 void init_dog(struct dog *MyDog, char *name, float age, char *owner);
 
 void print_dog(struct dog *d);
 
-dog_st *new_dog(char *name, float age, char *owner);
+dog_t *new_dog(char *name, float age, char *owner);
 #endif

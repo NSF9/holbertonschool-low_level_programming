@@ -8,7 +8,7 @@
  *
  * Description: This function calls the function pointed to by @f
  * and passes it the @name string to handle the actual printing.
- * Return: Nothing.
+ * Return: void.
  */
 void print_name(char *name, void (*f)(char *))
 {

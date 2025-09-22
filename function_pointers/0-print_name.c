@@ -2,9 +2,9 @@
 #include "function_pointers.h"
 
 /**
- * print_name - Prints a name using a callback function.
- * @name: Pointer to a string containing the name.
- * @f: Function pointer that takes a char * and returns void.
+ * print_name - prints a name
+ * @name: the name to print
+ * @f: the function to use for printing
  *
  * Return: void
  */

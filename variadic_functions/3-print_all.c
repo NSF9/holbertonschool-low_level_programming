@@ -43,8 +43,13 @@ void print_string(va_list args)
 }
 
 /**
- * print_all - Prints anything
- * @format: List of types of arguments
+ * print_all - Prints anything based on a format string
+ * @format: A constant string of format types:
+ *          'c' for char, 'i' for int, 'f' for float, 's' for string
+ *
+ * Description: Uses a format string to determine which types of
+ * arguments to expect and prints them accordingly, separated by ", ".
+ * If a string is NULL, it prints (nil) instead.
  */
 void print_all(const char * const format, ...)
 {

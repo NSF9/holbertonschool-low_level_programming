@@ -5,7 +5,7 @@ void print_char(va_list arg);
 void print_int(va_list arg);
 void print_float(va_list arg);
 void print_string(va_list arg);
-void print_all(const char* const format, ...);
+void print_all(const char *const format, ...);
 
 /**
  * print_char - Prints a single character.
@@ -40,7 +40,7 @@ void print_float(va_list arg)
  */
 void print_string(va_list arg)
 {
-	char* s = va_arg(arg, char*);
+	char *s = va_arg(arg, char*);
 
 	if (s == NULL)
 	{
@@ -51,25 +51,14 @@ void print_string(va_list arg)
 }
 
 /**
- * struct type_func - Maps a format character to a print function
- * @symbol: Format character
- * @printer: Function to print corresponding type
- */
-typedef struct type_func
-{
-	char* symbol;
-	void (*printer)(va_list);
-} type_func;
-
-/**
  * print_all - Prints anything passed based on format
  * @format: String of type specifiers
  */
-void print_all(const char* const format, ...)
+void print_all(const char *const format, ...)
 {
 	va_list Arguments;
 	int i = 0, j;
-	char* delim = "";
+	char *delim = "";
 
 	type_func map[] = {
 		{"c", print_char},

@@ -1,6 +1,8 @@
 #ifndef variadic_functions_h
 #define variadic_functions_h
 
+#include <stdarg.h>
+
 int sum_them_all(const unsigned int n, ...);
 
 void print_numbers(const char *separator, const unsigned int n, ...);
@@ -14,10 +16,10 @@ void print_all(const char * const format, ...);
  * @symbol: Format character
  * @printer: Function to print corresponding type
  */
-typedef struct type_func
+typedef struct printer
 {
-	char* symbol;
+	char *symbol;
 	void (*printer)(va_list);
-} type_func;
+} stPrinter;
 
 #endif

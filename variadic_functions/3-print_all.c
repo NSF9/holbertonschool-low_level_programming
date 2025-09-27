@@ -56,7 +56,11 @@ void print_all(const char * const format, ...)
 	va_list args;
 	unsigned int i = 0, j;
 	char *sep = "";
-
+	/**
+	 * struct printer - Struct to match format symbol with function
+	 * @symbol: Format symbol
+	 * @f: Function to print that type
+	 */
 	struct printer
 	{
 		char symbol;

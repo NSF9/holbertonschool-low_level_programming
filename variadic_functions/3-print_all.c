@@ -5,40 +5,51 @@
  * print_all - Prints anything based on format
  * @format: List of argument types: c, i, f, s
  */
-void print_all(const char *const format, ...)
+void print_all(const char* const format, ...)
 {
-	va_list Argumenst;
-	int i = 0;
-	char *sep = "";
-	char *str;
+	va_list Arguments;
+	int i = 0, j;
+	char* sep = "";
+	char* str;
 
-	va_start(Argumenst, format);
+	struct printer {
+		char t;
+		void (*f)(va_list);
+	} types[] = {
+		{'c', NULL},
+		{'i', NULL},
+		{'f', NULL},
+		{'s', NULL}
+	};
+
+	va_start(Arguments, format);
 
 	while (format && format[i])
 	{
-		if (format[i] == 'c' || format[i] == 'i' ||
-			format[i] == 'f' || format[i] == 's')
+		j = 0;
+		while (j < 4)
 		{
-			printf("%s", sep);
-			if (format[i] == 'c')
-				printf("%c", va_arg(Argumenst, int));
-			if (format[i] == 'i')
-				printf("%d", va_arg(Argumenst, int));
-			if (format[i] == 'f')
-				printf("%f", va_arg(Argumenst, double));
-			if (format[i] == 's')
+			if (format[i] == types[j].t)
 			{
-				str = va_arg(Argumenst, char*);
-				if (str == NULL)
-					printf("(nil)");
-				if (str != NULL)
-					printf("%s", str);
+				printf("%s", sep);
+				if (format[i] == 'c')
+					printf("%c", va_arg(Arguments, int));
+				if (format[i] == 'i')
+					printf("%d", va_arg(Arguments, int));
+				if (format[i] == 'f')
+					printf("%f", va_arg(Arguments, double));
+				if (format[i] == 's')
+				{
+					str = va_arg(Arguments, char*);
+					printf("%s", str ? str : "(nil)");
+				}
+				sep = ", ";
 			}
-			sep = ", ";
+			j++;
 		}
 		i++;
 	}
+	va_end(Arguments);
 
-	va_end(Argumenst);
 	printf("\n");
 }

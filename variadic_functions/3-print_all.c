@@ -1,13 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "variadic_functions.h"
-/**
- * print_all - Prints anything based on format
- * @format: List of argument types: c, i, f, s
- */
-#include "variadic_functions.h"
-#include <stdio.h>
-#include <stdarg.h>
 
 /**
  * print_char - Prints a char
@@ -59,10 +52,13 @@ void print_all(const char * const format, ...)
 	unsigned int i = 0, j;
 	char *sep = "";
 
-	struct printer {
+	struct printer
+	{
 		char symbol;
 		void (*f)(va_list);
-	} printers[] = {
+	}
+
+		printers[] = {
 		{'c', print_char},
 		{'i', print_int},
 		{'f', print_float},
@@ -88,4 +84,3 @@ void print_all(const char * const format, ...)
 	va_end(args);
 	printf("\n");
 }
-

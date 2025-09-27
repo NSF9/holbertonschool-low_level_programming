@@ -1,95 +1,102 @@
+#include "variadic_functions.h"
 #include <stdio.h>
 #include <stdarg.h>
-#include "variadic_functions.h"
+void print_char(va_list arg);
+void print_int(va_list arg);
+void print_float(va_list arg);
+void print_string(va_list arg);
+void print_all(const char* const format, ...);
 
 /**
- * print_char - Prints a char
- * @args: va_list
+ * print_char - Prints a single character.
+ * @arg: va_list pointing to the char to print.
  */
-void print_char(va_list args)
+void print_char(va_list arg)
 {
-	printf("%c", va_arg(args, int));
+	printf("%c", va_arg(arg, int));
 }
 
 /**
- * print_int - Prints an int
- * @args: va_list
+ * print_int - Prints an integer.
+ * @arg: va_list pointing to the int to print.
  */
-void print_int(va_list args)
+void print_int(va_list arg)
 {
-	printf("%d", va_arg(args, int));
+	printf("%d", va_arg(arg, int));
 }
 
 /**
- * print_float - Prints a float
- * @args: va_list
+ * print_float - Prints a floating point number.
+ * @arg: va_list pointing to the float to print.
  */
-void print_float(va_list args)
+void print_float(va_list arg)
 {
-	printf("%f", va_arg(args, double));
+	printf("%f", va_arg(arg, double));
 }
 
 /**
- * print_string - Prints a string
- * @args: va_list
+ * print_string - Prints a string.
+ * @arg: va_list pointing to the string to print.
  */
-void print_string(va_list args)
+void print_string(va_list arg)
 {
-	char *s = va_arg(args, char *);
+	char* s = va_arg(arg, char*);
 
 	if (s == NULL)
-		s = "(nil)";
+	{
+		printf("(nil)");
+		return;
+	}
 	printf("%s", s);
 }
 
 /**
- * print_all - Prints anything based on a format string
- * @format: A constant string of format types:
- *          'c' for char, 'i' for int, 'f' for float, 's' for string
- *
- * Description: Uses a format string to determine which types of
- * arguments to expect and prints them accordingly, separated by ", ".
- * If a string is NULL, it prints (nil) instead.
+ * struct type_func - Maps a format character to a print function
+ * @symbol: Format character
+ * @printer: Function to print corresponding type
  */
-void print_all(const char * const format, ...)
+typedef struct type_func
 {
-	va_list args;
-	unsigned int i = 0, j;
-	char *sep = "";
-	/**
-	 * struct printer - Struct to match format symbol with function
-	 * @symbol: Format symbol
-	 * @f: Function to print that type
-	 */
-	struct printer
-	{
-		char symbol;
-		void (*f)(va_list);
-	}
+	char* symbol;
+	void (*printer)(va_list);
+} type_func;
 
-		printers[] = {
-		{'c', print_char},
-		{'i', print_int},
-		{'f', print_float},
-		{'s', print_string}
+/**
+ * print_all - Prints anything passed based on format
+ * @format: String of type specifiers
+ */
+void print_all(const char* const format, ...)
+{
+	va_list Arguments;
+	int i = 0, j;
+	char* delim = "";
+
+	type_func map[] = {
+		{"c", print_char},
+		{"i", print_int},
+		{"f", print_float},
+		{"s", print_string}
 	};
 
-	va_start(args, format);
+	va_start(Arguments, format);
+
 	while (format && format[i])
 	{
 		j = 0;
 		while (j < 4)
 		{
-			if (format[i] == printers[j].symbol)
+			if (format[i] == *(map[j].symbol))
 			{
-				printf("%s", sep);
-				printers[j].f(args);
-				sep = ", ";
+				printf("%s", delim);
+				map[j].printer(Arguments);
+				delim = ", ";
+				break;
 			}
 			j++;
 		}
 		i++;
 	}
-	va_end(args);
+
 	printf("\n");
+	va_end(Arguments);
 }

@@ -20,18 +20,14 @@ static void safe_close(int fd)
 }
 
 /**
- * safe_write - Writes all bytes to a file descriptor, retrying if needed
- * @fd: Destination file descriptor
- * @filename: File name (used in error messages)
- * @buf: Pointer to the data buffer
- * @count: Number of bytes to write
+ * safe_read - Reads from a file descriptor, retries if interrupted
+ * @fd: Source file descriptor
+ * @buf: Buffer to store data
+ * @n: Number of bytes to read
+ * @filename: Name of the file (for error messages)
+ * Return: Number of bytes read
  */
-static void safe_write(
-	int fd,
-	const char *filename,
-	const char *buf,
-	ssize_t count
-)
+static ssize_t safe_read(int fd, char *buf, size_t n, const char *filename)
 {
 	ssize_t bytes_read;
 
@@ -54,12 +50,9 @@ static void safe_write(
  * @buf: Data to write
  * @count: Number of bytes to write
  */
-static void safe_write
-	(int fd,
-	const char *filename,
-	const char *buf,
-	ssize_t count
-	)
+static void safe_write(
+	int fd,
+	const char *filename, const char *buf, ssize_t count)
 {
 	ssize_t written = 0, w;
 
@@ -69,13 +62,11 @@ static void safe_write
 			w = write(fd, buf + written, count - written);
 		} while (w == -1 && errno == EINTR);
 
-	if (w == -1)
-
-	{
-	dprintf(STDERR_FILENO,
-	"Error: Can't write to %s\n", filename);
-	exit(99);
-	}
+		if (w == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", filename);
+			exit(99);
+		}
 		written += w;
 	}
 }

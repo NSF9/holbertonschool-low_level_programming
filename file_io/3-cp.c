@@ -2,19 +2,84 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/stat.h>
+#include <errno.h>
+
+#define BUFFER_SIZE 1024
 
 /**
- * main - Copies the content of one file to another
- * @argc: Argument count
- * @argv: Argument vector
- *
- * Return: 0 on success, exits with error code otherwise
+ * safe_close - Closes a file descriptor or exits with code 100
+ * @fd: The file descriptor to close
  */
-int main(int argc, char *argv[])
+static void safe_close(int fd)
 {
-	int fd_from, fd_to, rd, wr;
-	char buffer[1024];
+	if (close(fd) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		exit(100);
+	}
+}
+
+/**
+ * safe_read - Reads from a file descriptor, retries if interrupted
+ * @fd: Source file descriptor
+ * @buf: Buffer to store data
+ * @n: Number of bytes to read
+ * @filename: Name of the file (for error messages)
+ * Return: Number of bytes read
+ */
+static ssize_t safe_read(int fd, char *buf, size_t n, const char *filename)
+{
+	ssize_t bytes_read;
+
+	do {
+		bytes_read = read(fd, buf, n);
+	} while (bytes_read == -1 && errno == EINTR);
+
+	if (bytes_read == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", filename);
+		exit(98);
+	}
+	return (bytes_read);
+}
+
+/**
+ * safe_write - Writes all bytes to a file descriptor
+ * @fd: Destination file descriptor
+ * @filename: File name (for error message)
+ * @buf: Data to write
+ * @count: Number of bytes to write
+ */
+static void safe_write(int fd, const char *filename, const char *buf, ssize_t count)
+{
+	ssize_t written = 0, w;
+
+	while (written < count)
+	{
+		do {
+			w = write(fd, buf + written, count - written);
+		} while (w == -1 && errno == EINTR);
+
+		if (w == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", filename);
+			exit(99);
+		}
+		written += w;
+	}
+}
+
+/**
+ * main - Copies contents of one file to another using 1 KiB buffer
+ * @argc: Argument count
+ * @argv: Argument values
+ * Return: 0 on success
+ */
+int main(int argc, char **argv)
+{
+	int src_fd, dest_fd;
+	ssize_t bytes;
+	char buffer[BUFFER_SIZE];
 
 	if (argc != 3)
 	{
@@ -22,52 +87,31 @@ int main(int argc, char *argv[])
 		exit(97);
 	}
 
-	fd_from = open(argv[1], O_RDONLY);
-	if (fd_from == -1)
+	src_fd = open(argv[1], O_RDONLY);
+	if (src_fd == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
 
-	fd_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	if (fd_to == -1)
+	bytes = safe_read(src_fd, buffer, BUFFER_SIZE, argv[1]);
+
+	dest_fd = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (dest_fd == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-		close(fd_from);
+		safe_close(src_fd);
 		exit(99);
 	}
 
-	while ((rd = read(fd_from, buffer, 1024)) > 0)
-	{
-		wr = write(fd_to, buffer, rd);
-		if (wr != rd)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-			close(fd_from);
-			close(fd_to);
-			exit(99);
-		}
-	}
+	if (bytes > 0)
+		safe_write(dest_fd, argv[2], buffer, bytes);
 
-	if (rd == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-		close(fd_from);
-		close(fd_to);
-		exit(98);
-	}
+	while ((bytes = safe_read(src_fd, buffer, BUFFER_SIZE, argv[1])) > 0)
+		safe_write(dest_fd, argv[2], buffer, bytes);
 
-	if (close(fd_from) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
-		exit(100);
-	}
-
-	if (close(fd_to) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
-		exit(100);
-	}
-
+	safe_close(src_fd);
+	safe_close(dest_fd);
 	return (0);
 }
+

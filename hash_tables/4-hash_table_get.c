@@ -25,12 +25,12 @@ node = ht->array[index];
 while (node && strcmp(node->key, key) != 0)
 node = node->next;
 
-if (node == NULL)
-{
-    return NULL;
-}
-else
-{
-    return node->value;
-}
+	if (node == NULL)
+	{
+	return (NULL);
+	}
+	else
+	{
+	return (node->value);
+	}
 }
